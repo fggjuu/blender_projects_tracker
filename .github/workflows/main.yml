@@ -1,19 +1,20 @@
-name: Notify Telegram
+name: Notify on Commit
 
 on:
   push:
     branches:
-      - main
-  issues:
-    types: [opened, edited, closed]
-  
+      - master
+
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Send Telegram notification
-        uses: peter-evans/telegram-notify@v2
+        uses: peter-evans/telegram-notify@v1
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
-          message: 'A new commit or issue update has been made to the project!'
+          message: 'New commit pushed to master branch!'
