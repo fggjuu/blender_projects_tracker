@@ -1,0 +1,19 @@
+name: Notify Telegram
+
+on:
+  push:
+    branches:
+      - main
+  issues:
+    types: [opened, edited, closed]
+  
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram notification
+        uses: peter-evans/telegram-notify@v2
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          message: 'A new commit or issue update has been made to the project!'
